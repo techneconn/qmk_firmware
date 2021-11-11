@@ -54,6 +54,8 @@ enum custom_keycodes {
 #define SFSC SFT_T(KC_SCLN)
 #define GUILB GUI_T(KC_LBRC)
 #define ALTRB ALT_T(KC_RBRC)
+#define RGUIQT RGUI_T(KC_QUOT)
+#define RALTEQ RALT_T(KC_EQL)
 
 #define LOWET LT(_LOWER, KC_ENT)
 // #define ADJSP LT(_ADJUST, KC_SPC) // does't work for helix: achieved by process_record_user
@@ -70,9 +72,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // |--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,\
     // |--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
-        GUILB,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,    KC_K,    KC_L,    SFSC,    KC_QUOT,\
+        GUILB,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,    KC_K,    KC_L,    SFSC,    RGUIQT, \
     // |--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
-        ALTRB,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    LOWER,   RAISE,   KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_EQL, \
+        ALTRB,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    LOWER,   RAISE,   KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, RALTEQ, \
     // |--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|--------|
         _______, KC_LALT, KC_LGUI, _______, CTLES,   SFSP,    LOWEI,   RAIKN,   LOWET,   ADJSP,   _______, KC_RGUI, KC_RALT, _______ \
     // .--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------.
