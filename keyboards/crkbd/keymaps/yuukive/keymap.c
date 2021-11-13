@@ -26,6 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // defined by yuukive
 enum custom_keycodes {
+  RGBRST, // Reset Lighting
   LOWEI, // Tap Eisu or Hold LOWER
   RAIKN, // Tap Kana or Hold RAISE
   ADJSP, // Tap Space or Hold ADJUST
@@ -94,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [3] = LAYOUT_split_3x6_3(
   //,--------+--------+--------+--------+--------+--------.                    ,--------+--------+--------+--------+--------+--------.
-     RESET,   RGB_RMOD,RGB_HUI, RGB_SAI, RGB_VAI, RESET,                        KC_NLCK, KC_CAPS, KC_PGUP, XXXXXXX, XXXXXXX, CAD,
+     RGBRST,  RGB_RMOD,RGB_HUI, RGB_SAI, RGB_VAI, RESET,                        KC_NLCK, KC_CAPS, KC_PGUP, XXXXXXX, XXXXXXX, CAD,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      RGB_TOG, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX,                      KC_PSCR, KC_HOME, KC_PGDN, KC_END,  XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -208,6 +209,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     bool result = PROCESS_USUAL_BEHAVIOR;
     switch (keycode) {
         // defined by yuukive
+        case RGBRST:
+        #ifdef RGBLIGHT_ENABLE
+            if (record->event.pressed) {
+                eeconfig_update_rgblight_default();
+                rgblight_enable();
+            }
+        #endif
+        break;
         case LOWEI: {
             if (record->event.pressed) {
                 layer_on(L_LOWER);
