@@ -60,8 +60,6 @@ enum custom_keycodes {
 #define LOWET LT(_LOWER, KC_ENT)
 // #define ADJSP LT(_ADJUST, KC_SPC) // does't work for helix: achieved by process_record_user
 
-#define PROCESS_OVERRIDE_BEHAVIOR (false)
-#define PROCESS_USUAL_BEHAVIOR (true)
 
 
 
@@ -145,13 +143,14 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
+#define PROCESS_OVERRIDE_BEHAVIOR (false)
+#define PROCESS_USUAL_BEHAVIOR (true)
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     static uint16_t mem_keycode;
     uint16_t        prev_keycode = mem_keycode;
     bool            is_tapped    = ((!record->event.pressed) && (keycode == prev_keycode));
     mem_keycode                  = keycode;
 
-    bool result = PROCESS_USUAL_BEHAVIOR;
     switch (keycode) {
         case EISU:
         if (record->event.pressed) {
@@ -163,7 +162,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else {
             unregister_code(KC_LANG2);
         }
-        return false;
+        return PROCESS_OVERRIDE_BEHAVIOR;
         break;
         case KANA:
         if (record->event.pressed) {
@@ -175,7 +174,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         } else {
             unregister_code(KC_LANG1);
         }
-        return false;
+        return PROCESS_OVERRIDE_BEHAVIOR;
         break;
         case ADJUST:
         if (record->event.pressed) {
@@ -205,7 +204,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     tap_code(KC_LANG2);
                 }
             }
-            result = PROCESS_OVERRIDE_BEHAVIOR;
+            return PROCESS_OVERRIDE_BEHAVIOR;
         }
         break;
         case RAIKN: {
@@ -218,7 +217,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     tap_code(KC_LANG1);
                 }
             }
-            result = PROCESS_OVERRIDE_BEHAVIOR;
+            return PROCESS_OVERRIDE_BEHAVIOR;
         }
         break;
         case ADJSP: {
@@ -232,7 +231,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     tap_code(KC_SPC);
                 }
             }
-            result = PROCESS_OVERRIDE_BEHAVIOR;
+            return PROCESS_OVERRIDE_BEHAVIOR;
         }
         break;
         case CTLES: {
@@ -246,12 +245,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     tap_code(KC_LANG2);
                 }
             }
-            result = PROCESS_OVERRIDE_BEHAVIOR;
+            return PROCESS_OVERRIDE_BEHAVIOR;
         }
         break;
         default: {}
         break;
-        return result;
     }
     return PROCESS_USUAL_BEHAVIOR;
 }
