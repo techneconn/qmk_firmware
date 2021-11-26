@@ -19,14 +19,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 #include <stdio.h>
 
-#define L_BASE 0
-#define L_LOWER 2
-#define L_RAISE 4
-#define L_ADJUST 8
-
 // defined by yuukive
+enum layer_names {
+  _QWERTY = 0,
+  _LOWER,
+  _RAISE,
+  _ADJUST
+};
+
 enum custom_keycodes {
-  RGBRST, // Reset Lighting
+  RGBRST = SAFE_RANGE, // Reset Lighting
   LOWEI, // Tap Eisu or Hold LOWER
   RAIKN, // Tap Kana or Hold RAISE
   ADJSP, // Tap Space or Hold ADJUST
@@ -48,15 +50,11 @@ enum custom_keycodes {
 #define RGUIQT RGUI_T(KC_QUOT)
 #define RALTEQ RALT_T(KC_EQL)
 
-#define LOWET LT(L_LOWER, KC_ENT)
+#define LOWET LT(_LOWER, KC_ENT)
 // #define ADJSP LT(_ADJUST, KC_SPC) // does't work for helix: achieved by process_record_user
 
-#define PROCESS_OVERRIDE_BEHAVIOR (false)
-#define PROCESS_USUAL_BEHAVIOR (true)
-
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [0] = LAYOUT_split_3x6_3(
+  [_QWERTY] = LAYOUT_split_3x6_3(
   //,--------+--------+--------+--------+--------+--------.                    ,--------+--------+--------+--------+--------+--------.
      KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -66,10 +64,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                          CTLES,   SFSP,    LOWEI,      RAIKN,   LOWET,   ADJSP
                                       //`--------------------------'  `--------------------------'
-
   ),
 
-  [1] = LAYOUT_split_3x6_3(
+  [_LOWER] = LAYOUT_split_3x6_3(
   //,--------+--------+--------+--------+--------+--------.                    ,--------+--------+--------+--------+--------+--------.
      _______, KC_DEL,  KC_BSPC, KC_UP,   CTLBC,   CTRBC,                        KC_ASTR, KC_P7,   KC_P8,   KC_P9,   KC_BSPC, KC_MINS,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -81,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-  [2] = LAYOUT_split_3x6_3(
+  [_RAISE] = LAYOUT_split_3x6_3(
   //,--------+--------+--------+--------+--------+--------.                    ,--------+--------+--------+--------+--------+--------.
      _______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                      KC_F12,  KC_BSLS, KC_UP,   KC_BSPC, KC_DEL,  KC_GRV,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -93,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   ),
 
-  [3] = LAYOUT_split_3x6_3(
+  [_ADJUST] = LAYOUT_split_3x6_3(
   //,--------+--------+--------+--------+--------+--------.                    ,--------+--------+--------+--------+--------+--------.
      RGBRST,  RGB_RMOD,RGB_HUI, RGB_SAI, RGB_VAI, RESET,                        KC_NLCK, KC_CAPS, KC_PGUP, XXXXXXX, XXXXXXX, CAD,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -114,6 +111,11 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
   return rotation;
 }
 
+
+#define L_BASE 0
+#define L_LOWER 2
+#define L_RAISE 4
+#define L_ADJUST 8
 void oled_render_layer_state(void) {
     oled_write_P(PSTR("Layer: "), false);
     switch (layer_state) {
@@ -196,6 +198,12 @@ void oled_task_user(void) {
     }
 }
 
+layer_state_t layer_state_set_user(layer_state_t state) {
+  return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+}
+
+#define PROCESS_OVERRIDE_BEHAVIOR (false)
+#define PROCESS_USUAL_BEHAVIOR (true)
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         set_keylog(keycode, record);
@@ -206,7 +214,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     bool            is_tapped    = ((!record->event.pressed) && (keycode == prev_keycode));
     mem_keycode                  = keycode;
 
-    bool result = PROCESS_USUAL_BEHAVIOR;
     switch (keycode) {
         // defined by yuukive
         case RGBRST:
@@ -219,42 +226,42 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         break;
         case LOWEI: {
             if (record->event.pressed) {
-                layer_on(L_LOWER);
+                layer_on(_LOWER);
             } else {
-                layer_off(L_LOWER);
+                layer_off(_LOWER);
                 if (is_tapped) {
                     tap_code(KC_MHEN);
                     tap_code(KC_LANG2);
                 }
             }
-            result = PROCESS_OVERRIDE_BEHAVIOR;
+            return PROCESS_OVERRIDE_BEHAVIOR;
         }
         break;
         case RAIKN: {
             if (record->event.pressed) {
-                layer_on(L_RAISE);
+                layer_on(_RAISE);
             } else {
-                layer_off(L_RAISE);
+                layer_off(_RAISE);
                 if (is_tapped) {
                     tap_code(KC_HENK);
                     tap_code(KC_LANG1);
                 }
             }
-            result = PROCESS_OVERRIDE_BEHAVIOR;
+            return PROCESS_OVERRIDE_BEHAVIOR;
         }
         break;
         case ADJSP: {
             if (record->event.pressed) {
-                layer_on(L_RAISE);
-                layer_on(L_LOWER);
+                layer_on(_RAISE);
+                layer_on(_LOWER);
             } else {
-                layer_off(L_RAISE);
-                layer_off(L_LOWER);
+                layer_off(_RAISE);
+                layer_off(_LOWER);
                 if (is_tapped) {
                     tap_code(KC_SPC);
                 }
             }
-            result = PROCESS_OVERRIDE_BEHAVIOR;
+            return PROCESS_OVERRIDE_BEHAVIOR;
         }
         break;
         case CTLES: {
@@ -268,16 +275,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     tap_code(KC_LANG2);
                 }
             }
-            result = PROCESS_OVERRIDE_BEHAVIOR;
+            return PROCESS_OVERRIDE_BEHAVIOR;
         }
         break;
         default: {}
         break;
-        return result;
     }
     return PROCESS_USUAL_BEHAVIOR;
 }
-
-
-
 #endif // OLED_ENABLE
