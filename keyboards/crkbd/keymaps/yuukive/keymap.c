@@ -32,7 +32,8 @@ enum custom_keycodes {
   LOWEI, // Tap Eisu or Hold LOWER
   RAIKN, // Tap Kana or Hold RAISE
   ADJSP, // Tap Space or Hold ADJUST
-  CTLES  // Tap ESC+Eisu or Hold Ctrl
+  CTLES, // Tap ESC+Eisu or Hold Ctrl
+  HELLO  // Output Hello World
 };
 #define CAD LCTL(LALT(KC_DEL)) // Ctrl + Alt + Del
 #define CTLBC LCTL(KC_LBRC)
@@ -60,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      GUILB,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L,    SFSC,    RGUIQT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     ALTRB,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, RALTEQ,
+     ALTRB,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_EQL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                          CTLES,   SFSP,    LOWEI,      RAIKN,   LOWET,   ADJSP
                                       //`--------------------------'  `--------------------------'
@@ -94,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,--------+--------+--------+--------+--------+--------.                    ,--------+--------+--------+--------+--------+--------.
      RGBRST,  RGB_RMOD,RGB_HUI, RGB_SAI, RGB_VAI, RESET,                        KC_NLCK, KC_CAPS, KC_PGUP, XXXXXXX, XXXXXXX, CAD,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     RGB_TOG, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX,                      KC_PSCR, KC_HOME, KC_PGDN, KC_END,  XXXXXXX, XXXXXXX,
+     RGB_TOG, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX,                      KC_PSCR, KC_HOME, KC_PGDN, KC_END,  XXXXXXX, HELLO,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
      _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -276,6 +277,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return PROCESS_OVERRIDE_BEHAVIOR;
+        }
+        break;
+        case HELLO: {
+            if (record->event.pressed) {
+                SEND_STRING("Hello, world.");
+            }
         }
         break;
         default: {}
