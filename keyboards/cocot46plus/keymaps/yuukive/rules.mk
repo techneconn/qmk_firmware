@@ -1,1 +1,2 @@
-VIA_ENABLE = false
+VIA_ENABLE = no
+MOUSEKEY_ENABLE = yes
