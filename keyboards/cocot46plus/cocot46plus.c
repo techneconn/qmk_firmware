@@ -243,7 +243,10 @@ void oled_write_layer_state(void) {
             oled_write_P(PSTR("Raise"), false);
             break;
         case 3:
-            oled_write_P(PSTR("Mouse"), false);
+            oled_write_P(PSTR("Adj  "), false);
+            break;
+        case 4:
+            oled_write_P(PSTR("Numb "), false);
             break;
         default:
             oled_write_P(PSTR("Undef"), false);

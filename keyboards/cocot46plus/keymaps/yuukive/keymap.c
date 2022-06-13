@@ -23,9 +23,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Defines names for use in layer keycodes and the keymap
 enum layer_number {
     _BASE = 0,
-    _LOWER = 1,
-    _RAISE = 2,
-    _ADJUST = 3
+    _LOWER,
+    _RAISE,
+    _ADJUST,
+    _NUMBER
 };
 
 
@@ -53,17 +54,22 @@ enum custom_keycodes {
 #define RGUIQT RGUI_T(KC_QUOT)
 #define RALTEQ RALT_T(KC_EQL)
 
-#define LOWET LT(_LOWER, KC_ENT)
+#define NUMET LT(_NUMBER, KC_ENT)
 // #define ADJSP LT(_ADJUST, KC_SPC) // does't work for helix: achieved by process_record_user
 
 #define DT_L LGUI(LCTL(KC_LEFT)) // Win + Ctrl + ←
 #define DT_R LGUI(LCTL(KC_RIGHT))  // Win + Ctrl + →
 #define DT_V LGUI(KC_TAB)  // Win + TAB
 
+#define RAIESC LT(_RAISE,KC_ESC)  // lower
 
-#define LW_MHEN LT(1,KC_MHEN)  // lower
-#define RS_HENK LT(2,KC_HENK)  // raise
+#define LW_MHEN LT(_LOWER,KC_MHEN)  // lower
+#define RS_HENK LT(_RAISE,KC_HENK)  // raise
 #define DEL_ALT ALT_T(KC_DEL)
+
+
+// 新しいレイヤーを定義して、キーボードショートカットを駆使すればロジクールのマウスジェスチャと同じことを実現できそう
+// スクロールに関してもそう。
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -71,50 +77,62 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                                       |--------+--------+--------+--------+--------+--------|
      KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                            KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
   //|--------+--------+--------+--------+--------+--------|                                       |--------+--------+--------+--------+--------+--------|
-     GUILB,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                            KC_H,    KC_J,    KC_K,    KC_L,    SFSC,    RGUIQT,
+     GUILB,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                            KC_H,    KC_J,    KC_K,    KC_L,    SFSC,    KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                                       |--------+--------+--------+--------+--------+--------|
      ALTRB,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                            KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_EQL,
   //|--------+--------+--------+--------+--------+--------|                                       |--------+--------+--------+--------+--------+--------|
-                        KC_ESC,  CTLES,   SFSP,    LOWEI, KC_MS_BTN1,             KC_MS_BTN2,  RAIKN,   LOWET,   ADJSP,  KC_ESC,
-                                                                 KC_WH_U, KC_MS_BTN3,  KC_WH_D, XXXXXXX, XXXXXXX, XXXXXXX
+                       RAIESC,  CTLES,   SFSP,    LOWEI, KC_BTN1,             KC_BTN2,  RAIKN,   NUMET,   ADJSP,  KC_ESC,
+                                                                 KC_WH_U, KC_BTN3,  KC_WH_D, XXXXXXX, XXXXXXX, XXXXXXX
                                                             //`--------------'  `--------------'
     ),
   [_LOWER] = LAYOUT(
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     _______, KC_DEL,  KC_BSPC, KC_UP,   CTLBC,   CTRBC,                        KC_ASTR, KC_P7,   KC_P8,   KC_P9,   KC_BSPC, KC_MINS,
+     _______, KC_DEL,  KC_BSPC, KC_UP,   KC_BTN4, KC_BTN5,                      DT_L,    DT_V,    DT_R,    KC_PIPE, KC_BSLS, KC_GRV,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     _______, CT_A,    KC_LEFT, KC_DOWN, KC_RIGHT,KC_ENT,                       KC_ENT,  KC_P4,   KC_P5,   KC_P6,   KC_P0,   KC_PLUS,
+     _______, CT_A,    KC_LEFT, KC_DOWN, KC_RIGHT,KC_ENT,                       KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_TILD,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     _______, CT_Z,    CT_X,    CT_C,    CT_V,    KC_SPC,                       KC_SLSH, KC_P1,   KC_P2,   KC_P3,   KC_DOT,  KC_COMM,
+     _______, CT_Z,    CT_X,    CT_C,    CT_V,    KC_SPC,                       KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-                        _______, _______, _______,  _______,   KC_MS_BTN2,             KC_MS_BTN1,  _______,   _______, _______,  _______,
-                                                                  DT_L, DT_V,  DT_R, _______, _______, _______
+                        _______, _______, _______, _______,   KC_BTN2,             KC_BTN1,  _______,   _______, _______,  _______,
+                                                                  KC_WH_R, KC_BTN3,  KC_WH_L, _______, _______, _______
                                                             //`--------------'  `--------------'
     ),
   [_RAISE] = LAYOUT(
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     _______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                      KC_F12,  KC_BSLS, KC_UP,   KC_BSPC, KC_DEL,  KC_GRV,
+     HELLO,   _______, _______, KC_PGUP, _______, _______,                      KC_PGDN, KC_PGUP, KC_UP,   KC_BSPC, KC_DEL,  _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     _______, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN,                      KC_ENT,  KC_LEFT, KC_DOWN, KC_RIGHT,KC_TILD, KC_PIPE,
+     DM_PLY1, DM_PLY2, KC_HOME, KC_PGDN, KC_END,  _______,                      KC_ENT,  KC_LEFT, KC_DOWN, KC_RIGHT,CT_A,    _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+     _______, _______, _______, _______, _______, _______,                      KC_SPC,  CT_V,    CT_C,    CT_X,    CT_Z,    _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-                        _______, _______,   _______,  _______,   KC_MS_BTN2,             KC_MS_BTN1,  _______, _______, _______,  _______,
-                                                                 KC_WH_L, KC_MS_BTN3,  KC_WH_R, _______, _______, _______
+                        _______, _______, _______, _______,   KC_BTN2,             KC_BTN1,  _______, _______, _______,  _______,
+                                                                 DT_R, DT_V,  DT_L, _______, _______, _______ // TODO: assign something here
+                                                            //`--------------'  `--------------'
+    ),
+  [_NUMBER] = LAYOUT(
+ //|--------+--------+--------+--------+--------+---------|                    |--------+--------+--------+--------+--------+--------|
+     _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_ASTR, KC_P7,   KC_P8,   KC_P9,   KC_BSPC, KC_MINS,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+     _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,                       KC_ENT,  KC_P4,   KC_P5,   KC_P6,   KC_P0,   KC_PLUS,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+     _______, KC_F12,  XXXXXXX, XXXXXXX, XXXXXXX, KC_F11,                       KC_SLSH, KC_P1,   KC_P2,   KC_P3,   KC_DOT,  KC_COMM,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+                        _______, _______, _______,  _______,   KC_BTN2,             KC_BTN1,  _______,   _______, _______,  _______,
+                                                                  DT_R, DT_V,  DT_L, _______, _______, _______
                                                             //`--------------'  `--------------'
     ),
   [_ADJUST] = LAYOUT(
   //,--------+--------+--------+--------+--------+--------.                    ,--------+--------+--------+--------+--------+--------|
-     RGBRST,  RGB_RMOD,RGB_HUI, RGB_SAI, RGB_VAI, RESET,                        KC_NLCK, KC_CAPS, KC_PGUP, XXXXXXX, XXXXXXX, CAD,
+     RGBRST,  RGB_RMOD,RGB_HUI, RGB_SAI, RGB_VAI, RESET,                        KC_NLCK, KC_PSCR, DM_RSTP, XXXXXXX, XXXXXXX, CAD,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     RGB_TOG, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX,                      KC_PSCR, KC_HOME, KC_PGDN, KC_END,  XXXXXXX, HELLO,
+     RGB_TOG, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX,                      KC_CAPS, DM_REC1, DM_REC2, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX,
+     XXXXXXX, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
                         _______, _______,   _______,  _______,   _______,             _______,  _______, _______,   _______,  _______,
                                                                   _______, _______,  _______, _______, _______, _______
                                                             //`--------------'  `--------------'
-    )
+    ),
 };
 
 keyevent_t encoder1_ccw = {
@@ -190,21 +208,25 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
 layer_state_t layer_state_set_user(layer_state_t state) {
     switch (get_highest_layer(state)) {
     case _LOWER:
-        rgblight_sethsv_range(HSV_BLUE, 0, 3);
+        rgblight_sethsv_range(HSV_CYAN, 0, 3);
         // cocot_set_scroll_mode(true);
         cocot_set_scroll_mode(false);
         break;
     case _RAISE:
-        rgblight_sethsv_range(HSV_RED, 0, 3);
+        rgblight_sethsv_range(HSV_GREEN, 0, 3);
         // cocot_set_scroll_mode(true);
         cocot_set_scroll_mode(false);
         break;
     case _ADJUST:
-        rgblight_sethsv_range(HSV_GREEN, 0, 3);
+        rgblight_sethsv_range(HSV_RED, 0, 3);
+        cocot_set_scroll_mode(false);
+        break;
+    case _NUMBER:
+        rgblight_sethsv_range(HSV_MAGENTA, 0, 3);
         cocot_set_scroll_mode(false);
         break;
     default:
-        rgblight_sethsv_range( 0, 0, 0, 0, 3);
+        rgblight_sethsv_range(HSV_BLUE, 0, 3);
         cocot_set_scroll_mode(false);
         break;
     }
