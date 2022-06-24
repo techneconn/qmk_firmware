@@ -66,7 +66,13 @@ enum cocot_keycodes {
     SCRL_MO,
     SCRL_TO,
     SCRL_IN,
-
+    // yuukive
+    RGBRST, // Reset Lighting
+    LOWEI, // Tap Eisu or Hold LOWER
+    RAIKN, // Tap Kana or Hold RAISE
+    ADJSP, // Tap Space or Hold ADJUST
+    CTLES, // Tap ESC+Eisu or Hold Ctrl
+    HELLO, // Output Hello World
 };
 
 bool encoder_update_user(uint8_t index, bool clockwise);
