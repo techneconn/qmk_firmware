@@ -92,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
   [_LOWER] = LAYOUT(
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-     _______, KC_DEL,  KC_BSPC, KC_UP,   KC_BTN4, KC_BTN5,                            DT_L,    DT_V,    DT_R,    KC_PIPE, KC_BSLS, KC_GRV,
+     _______, KC_DEL,  KC_BSPC, KC_UP,   KC_BTN4, KC_BTN5,                            DT_L,    DT_R,    DT_V,    KC_PIPE, KC_BSLS, KC_GRV,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
      _______, CT_A,    KC_LEFT, KC_DOWN, KC_RIGHT,KC_ENT,                             KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_TILD,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
