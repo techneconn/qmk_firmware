@@ -48,6 +48,7 @@ typedef union {
         uint8_t rotation_angle;
         int8_t scrl_inv;
         bool scrl_mode;
+        bool scrl_fixed_axis;
         report_mouse_t last_mouse;
     };
 } cocot_config_t;
@@ -65,7 +66,10 @@ enum cocot_keycodes {
     ROT_L15,
     SCRL_MO,
     SCRL_TO,
+    SCRL_ON,
+    SCRL_OFF,
     SCRL_IN,
+    SCRL_SA,
     // yuukive
     RGBRST, // Reset Lighting
     LOWEI, // Tap Eisu or Hold LOWER

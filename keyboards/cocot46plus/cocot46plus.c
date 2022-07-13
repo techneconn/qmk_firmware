@@ -92,6 +92,14 @@ report_mouse_t pointing_device_task_kb(report_mouse_t mouse_report) {
     int8_t y_rev =  + mouse_report.x * sin(rad) + mouse_report.y * cos(rad);
 
     if (cocot_get_scroll_mode()) {
+        if (cocot_config.scrl_fixed_axis) {
+            if(abs(x_rev) > abs(y_rev)) {
+                y_rev = 0;
+            } else {
+                x_rev = 0;
+            }
+        }
+
         // accumulate scroll
         h_acm += x_rev * cocot_config.scrl_inv;
         v_acm += y_rev * cocot_config.scrl_inv * -1;
@@ -176,6 +184,18 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
         eeconfig_update_kb(cocot_config.raw);
     }
 
+    if (keycode == SCRL_SA && record->event.pressed) {
+        { cocot_config.scrl_fixed_axis ^= 1; }
+    }
+
+    if (keycode == SCRL_ON && record->event.pressed) {
+        { cocot_config.scrl_mode = true; }
+    }
+
+    if (keycode == SCRL_OFF && record->event.pressed) {
+        { cocot_config.scrl_mode = false; }
+    }
+
     if (keycode == SCRL_TO && record->event.pressed) {
         { cocot_config.scrl_mode ^= 1; }
     }
@@ -194,6 +214,7 @@ void eeconfig_init_kb(void) {
     cocot_config.rotation_angle = COCOT_ROTATION_DEFAULT;
     cocot_config.scrl_inv = COCOT_SCROLL_INV_DEFAULT;
     cocot_config.scrl_mode = false;
+    cocot_config.scrl_fixed_axis = false;
     eeconfig_update_kb(cocot_config.raw);
     eeconfig_init_user();
 }
@@ -220,7 +241,6 @@ void cocot_set_scroll_mode(bool mode) {
 }
 
 
-
 // OLED utility
 #ifdef OLED_ENABLE
 
@@ -245,6 +265,7 @@ void oled_write_layer_state(void) {
     int cpi = cpi_array[cocot_config.cpi_idx];
     int scroll_div = scrl_div_array[cocot_config.scrl_div];
     int angle = angle_array[cocot_config.rotation_angle];
+    bool fixed_axis = cocot_config.scrl_fixed_axis;
 
     char buf1[5];
     char buf2[3];
@@ -278,7 +299,11 @@ void oled_write_layer_state(void) {
     }
     oled_write_P(PSTR("/"), false);
     if (cocot_get_scroll_mode()){
-        oled_write_P(PSTR("S"), false);
+        if (fixed_axis) {
+            oled_write_P(PSTR("F"), false);
+        } else {
+            oled_write_P(PSTR("S"), false);
+        }
     } else{
         oled_write_P(PSTR("C"), false);
     }
