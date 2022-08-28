@@ -214,7 +214,7 @@ void eeconfig_init_kb(void) {
     cocot_config.rotation_angle = COCOT_ROTATION_DEFAULT;
     cocot_config.scrl_inv = COCOT_SCROLL_INV_DEFAULT;
     cocot_config.scrl_mode = false;
-    cocot_config.scrl_fixed_axis = false;
+    cocot_config.scrl_fixed_axis = true; // WHY: not true by default
     eeconfig_update_kb(cocot_config.raw);
     eeconfig_init_user();
 }
@@ -300,7 +300,7 @@ void oled_write_layer_state(void) {
     oled_write_P(PSTR("/"), false);
     if (cocot_get_scroll_mode()){
         if (fixed_axis) {
-            oled_write_P(PSTR("F"), false);
+            oled_write_P(PSTR("s"), false);
         } else {
             oled_write_P(PSTR("S"), false);
         }
