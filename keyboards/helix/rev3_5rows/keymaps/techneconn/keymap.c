@@ -30,7 +30,7 @@ enum custom_keycodes {
   KANA,
   ADJUST,
   RGBRST,
-  // defined by yuukive
+  // defined by techneconn
   LOWEI, // Tap Eisu or Hold LOWER
   RAIKN, // Tap Kana or Hold RAISE
   ADJSP, // Tap Space or Hold ADJUST
@@ -40,7 +40,7 @@ enum custom_keycodes {
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
 
-// defined by yuukive
+// defined by techneconn
 #define CAD LCTL(LALT(KC_DEL)) // Ctrl + Alt + Del
 #define CTLBC LCTL(KC_LBRC)
 #define CTRBC LCTL(KC_RBRC)
@@ -193,7 +193,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
         #endif
         break;
-        // defined by yuukive
+        // defined by techneconn
         case LOWEI: {
             if (record->event.pressed) {
                 layer_on(_LOWER);

@@ -63,7 +63,7 @@ enum layer_number {
 #define DT_R LGUI(LCTL(KC_RIGHT))  // Win + Ctrl + →
 #define DT_V LGUI(KC_TAB)  // Win + TAB
 
-// yuukive for cocot46plus
+// techneconn for cocot46plus
 #define RAIESC LT(_RAISE,KC_ESC)  // lower
 #define MOUSE TG(_TRACKBALL)
 
@@ -278,7 +278,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     mem_keycode                  = keycode;
 
     switch (keycode) {
-        // defined by yuukive
+        // defined by techneconn
         case RGBRST:
         #ifdef RGBLIGHT_ENABLE
             if (record->event.pressed) {

@@ -70,7 +70,7 @@ enum cocot_keycodes {
     SCRL_OFF,
     SCRL_IN,
     SCRL_SA,
-    // yuukive
+    // techneconn
     RGBRST, // Reset Lighting
     LOWEI, // Tap Eisu or Hold LOWER
     RAIKN, // Tap Kana or Hold RAISE
