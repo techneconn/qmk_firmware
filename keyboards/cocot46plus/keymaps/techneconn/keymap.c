@@ -62,6 +62,8 @@ enum layer_number {
 #define DT_L LGUI(LCTL(KC_LEFT)) // Win + Ctrl + ←
 #define DT_R LGUI(LCTL(KC_RIGHT))  // Win + Ctrl + →
 #define DT_V LGUI(KC_TAB)  // Win + TAB
+#define ALLB LALT(KC_LBRC)  // Alt + [
+#define ALRB LALT(KC_RBRC)  // Alt + ]
 
 // techneconn for cocot46plus
 #define RAIESC LT(_RAISE,KC_ESC)  // lower
@@ -92,11 +94,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
   [_LOWER] = LAYOUT(
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-     _______, KC_DEL,  KC_BSPC, KC_UP,   KC_BTN4, KC_BTN5,                            DT_L,    DT_R,    DT_V,    KC_PIPE, KC_BSLS, KC_GRV,
+     _______, KC_DEL,  KC_BSPC, KC_UP,   KC_BTN4, KC_BTN5,                            DT_L,    DT_R,    DT_V,    ALLB,    ALRB,    XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-     _______, CT_A,    KC_LEFT, KC_DOWN, KC_RIGHT,KC_ENT,                             KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_TILD,
+     _______, CT_A,    KC_LEFT, KC_DOWN, KC_RIGHT,KC_ENT,                             XXXXXXX, KC_TILD, KC_GRV,  KC_PIPE, KC_BSLS, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-     _______, CT_Z,    CT_X,    CT_C,    CT_V,    KC_SPC,                             KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______,
+     _______, CT_Z,    CT_X,    CT_C,    CT_V,    KC_SPC,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
                           _______, _______, _______, _______, KC_BTN2,   KC_BTN1, _______, _______, _______, _______,
   //                     |--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------|
@@ -105,11 +107,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
   [_RAISE] = LAYOUT(
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-     DM_PLY1, _______, _______, KC_PGUP, _______, _______,                            KC_PGDN, KC_PGUP, KC_UP,   KC_BSPC, KC_DEL,  _______,
+     _______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                            KC_PGDN, KC_PGUP, KC_UP,   KC_BSPC, KC_DEL,  _______,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-     DM_PLY2, _______, KC_HOME, KC_PGDN, KC_END,  _______,                            KC_ENT,  KC_LEFT, KC_DOWN, KC_RIGHT,CT_A,    _______,
+     _______, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN,                            KC_ENT,  KC_LEFT, KC_DOWN, KC_RIGHT,CT_A,    _______,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-     _______, _______, _______, _______, _______, _______,                            KC_SPC,  CT_V,    CT_C,    CT_X,    CT_Z,    _______,
+     _______, DM_REC1, DM_REC2, DM_RSTP, DM_PLY1, DM_PLY2,                            KC_SPC,  CT_V,    CT_C,    CT_X,    CT_Z,    _______,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
                           _______, _______, _______, _______, KC_BTN2,   KC_BTN1, _______, _______, _______, _______,
   //                     |--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------|
@@ -118,11 +120,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
   [_NUMBER] = LAYOUT(
  //|--------+--------+--------+--------+--------+---------|                          |--------+--------+--------+--------+--------+--------|
-     _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                              KC_ASTR, KC_P7,   KC_P8,   KC_P9,   KC_BSPC, KC_MINS,
+     _______, XXXXXXX, KC_F7,   KC_F8,   KC_F9,  XXXXXXX,                             KC_ASTR, KC_P7,   KC_P8,   KC_P9,   KC_BSPC, KC_MINS,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-     _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,                             KC_ENT,  KC_P4,   KC_P5,   KC_P6,   KC_P0,   KC_PLUS,
+     _______, KC_F10,  KC_F4,   KC_F5,   KC_F6,   KC_F11,                             KC_ENT,  KC_P4,   KC_P5,   KC_P6,   KC_P0,   KC_PLUS,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-     _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_F11,  KC_F12,                             KC_SLSH, KC_P1,   KC_P2,   KC_P3,   KC_DOT,  KC_COMM,
+     _______, XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F12,                             KC_SLSH, KC_P1,   KC_P2,   KC_P3,   KC_DOT,  KC_COMM,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
                           _______, _______, _______, _______, KC_BTN2,   KC_BTN1, _______, _______, _______, _______,
   //                     |--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------|
@@ -131,9 +133,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
   [_ADJUST] = LAYOUT(
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-     RGBRST,  RGB_RMOD,RGB_HUI, RGB_SAI, RGB_VAI, RESET,                              KC_NLCK, KC_PSCR, DM_REC1, XXXXXXX, XXXXXXX, CAD,
+     RGBRST,  RGB_RMOD,RGB_HUI, RGB_SAI, RGB_VAI, RESET,                              KC_NLCK, KC_PSCR, KC_PGUP, XXXXXXX, XXXXXXX, CAD,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-     RGB_TOG, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX,                            KC_CAPS, DM_RSTP, DM_REC2, XXXXXXX, XXXXXXX, XXXXXXX,
+     RGB_TOG, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX,                            KC_CAPS, KC_HOME, KC_PGDN, KC_END,  XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
      XXXXXXX, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
@@ -363,4 +365,3 @@ bool oled_task_user(void) {
     return false;
 }
 #endif
-
