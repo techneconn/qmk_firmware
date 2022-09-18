@@ -94,11 +94,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
   [_LOWER] = LAYOUT(
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-     _______, KC_DEL,  KC_BSPC, KC_UP,   KC_BTN4, KC_BTN5,                            DT_L,    DT_R,    DT_V,    ALLB,    ALRB,    XXXXXXX,
+     _______, KC_DEL,  KC_BSPC, KC_UP,   KC_BTN4, KC_BTN5,                            DT_L,    DT_R,    DT_V,    ALLB,    ALRB,    _______,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-     _______, CT_A,    KC_LEFT, KC_DOWN, KC_RIGHT,KC_ENT,                             XXXXXXX, KC_TILD, KC_GRV,  KC_PIPE, KC_BSLS, XXXXXXX,
+     _______, CT_A,    KC_LEFT, KC_DOWN, KC_RIGHT,KC_ENT,                             XXXXXXX, KC_TILD, KC_GRV,  KC_PIPE, KC_BSLS, _______,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-     _______, CT_Z,    CT_X,    CT_C,    CT_V,    KC_SPC,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+     _______, CT_Z,    CT_X,    CT_C,    CT_V,    KC_SPC,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
                           _______, _______, _______, _______, KC_BTN2,   KC_BTN1, _______, _______, _______, _______,
   //                     |--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------|
