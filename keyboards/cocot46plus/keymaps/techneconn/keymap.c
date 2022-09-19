@@ -27,7 +27,8 @@ enum layer_number {
     _RAISE,
     _ADJUST,
     _NUMBER,
-    _TRACKBALL
+    _TRACKBALL,
+    _BLANK
 };
 
 
@@ -51,6 +52,7 @@ enum layer_number {
 
 #define SFSP SFT_T(KC_SPC)
 #define SFSC SFT_T(KC_SCLN)
+#define SFBS SFT_T(KC_BSLS)
 #define GUILB GUI_T(KC_LBRC)
 #define ALTRB ALT_T(KC_RBRC)
 #define RGUIQT RGUI_T(KC_QUOT)
@@ -64,6 +66,7 @@ enum layer_number {
 #define DT_V LGUI(KC_TAB)  // Win + TAB
 #define ALLB LALT(KC_LBRC)  // Alt + [
 #define ALRB LALT(KC_RBRC)  // Alt + ]
+#define BLANK TG(_BLANK)
 
 // techneconn for cocot46plus
 #define RAIESC LT(_RAISE,KC_ESC)  // lower
@@ -96,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
      _______, KC_DEL,  KC_BSPC, KC_UP,   KC_BTN4, KC_BTN5,                            DT_L,    DT_R,    DT_V,    ALLB,    ALRB,    _______,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-     _______, CT_A,    KC_LEFT, KC_DOWN, KC_RIGHT,KC_ENT,                             XXXXXXX, KC_TILD, KC_GRV,  KC_PIPE, KC_BSLS, _______,
+     _______, CT_A,    KC_LEFT, KC_DOWN, KC_RIGHT,KC_ENT,                             XXXXXXX, KC_TILD, KC_GRV,  KC_PIPE, SFBS,    _______,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
      _______, CT_Z,    CT_X,    CT_C,    CT_V,    KC_SPC,                             XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
@@ -137,7 +140,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
      RGB_TOG, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX,                            KC_CAPS, KC_HOME, KC_PGDN, KC_END,  XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-     XXXXXXX, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX,
+     XXXXXXX, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    BLANK,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
                           _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______,
   //                     |--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------|
@@ -151,6 +154,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, SCRL_SA, ROT_L15,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
+                          _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______,
+  //                     |--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------|
+                                                           _______, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX
+  //                                                      |--------+--------+--------|
+    ),
+  [_BLANK] = LAYOUT(
+  //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
+     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
+     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
+     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, BLANK,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
                           _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______,
   //                     |--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------|
@@ -258,6 +274,10 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         break;
     case _TRACKBALL:
         rgblight_sethsv_range(HSV_AZURE, 0, 2);
+        cocot_set_scroll_mode(false);
+        break;
+    case _BLANK:
+        rgblight_sethsv_range(HSV_YELLOW, 0, 2);
         cocot_set_scroll_mode(false);
         break;
     default:
