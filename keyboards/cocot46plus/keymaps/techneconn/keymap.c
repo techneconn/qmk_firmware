@@ -67,7 +67,7 @@ enum layer_number {
 
 // techneconn for cocot46plus
 #define RAIESC LT(_RAISE,KC_ESC)  // lower
-#define MOUSE TG(_TRACKBALL)
+#define MOUSE MO(_TRACKBALL)
 
 #define LW_MHEN LT(_LOWER,KC_MHEN)  // lower
 #define RS_HENK LT(_RAISE,KC_HENK)  // raise
