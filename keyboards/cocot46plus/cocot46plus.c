@@ -99,6 +99,8 @@ report_mouse_t pointing_device_task_kb(report_mouse_t mouse_report) {
                 x_rev = 0;
             }
         }
+        // TODO: 一時的に垂直スクロールのみ許可
+        x_rev = 0;
 
         // accumulate scroll
         h_acm += x_rev * cocot_config.scrl_inv;

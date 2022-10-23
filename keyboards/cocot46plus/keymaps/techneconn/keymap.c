@@ -67,10 +67,11 @@ enum layer_number {
 #define ALLB LALT(KC_LBRC)  // Alt + [
 #define ALRB LALT(KC_RBRC)  // Alt + ]
 #define BLANK TG(_BLANK)
+#define A_S_O LALT(LSFT(KC_O))  // Alt + Shift + O
 
 // techneconn for cocot46plus
-#define RAIESC LT(_RAISE,KC_ESC)  // lower
 #define MOUSE MO(_TRACKBALL)
+#define NUMBER MO(_NUMBER)
 
 #define LW_MHEN LT(_LOWER,KC_MHEN)  // lower
 #define RS_HENK LT(_RAISE,KC_HENK)  // raise
@@ -90,14 +91,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
      ALTRB,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                               KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_EQL,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-                          RAIESC,  CTLES,   SFSP,    LOWEI,   KC_BTN1,   KC_BTN2, RAIKN,   NUMET,   ADJSP,   MOUSE,
+                          NUMBER,  CTLES,   SFSP,    LOWEI,   KC_BTN1,   KC_BTN2, RAIKN,   NUMET,   ADJSP,   MOUSE,
   //                     |--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------|
                                                            SCRL_OFF, SCRL_SA,SCRL_ON, XXXXXXX, XXXXXXX, XXXXXXX
   //                                                      |--------+--------+--------|
     ),
   [_LOWER] = LAYOUT(
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-     _______, KC_DEL,  KC_BSPC, KC_UP,   KC_BTN4, KC_BTN5,                            DT_L,    DT_R,    DT_V,    ALLB,    ALRB,    _______,
+     _______, KC_DEL,  KC_BSPC, KC_UP,   KC_BTN4, KC_BTN5,                            DT_L,    DT_R,    DT_V,    ALLB,    ALRB,    A_S_O,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
      _______, CT_A,    KC_LEFT, KC_DOWN, KC_RIGHT,KC_ENT,                             XXXXXXX, KC_GRV,  KC_TILD, KC_PIPE, SFBS,    _______,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
