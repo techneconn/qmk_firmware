@@ -75,6 +75,7 @@ enum layer_number {
 
 #define LW_MHEN LT(_LOWER,KC_MHEN)  // lower
 #define RS_HENK LT(_RAISE,KC_HENK)  // raise
+#define RS_SP LT(_RAISE,KC_SPACE)  // rais space
 #define DEL_ALT ALT_T(KC_DEL)
 
 
@@ -91,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
      ALTRB,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                               KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_EQL,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-                          NUMBER,  CTLES,   SFSP,    LOWEI,   KC_BTN1,   KC_BTN2, RAIKN,   NUMET,   ADJSP,   MOUSE,
+                          NUMBER,  CTLEI,   SFSP,    LOWES,   KC_BTN1,   KC_BTN2, RS_SP,   NUMET,   ADJKN,   MOUSE,
   //                     |--------+--------+--------+--------+--------| |--------+--------+--------+--------+--------|
                                                            SCRL_OFF, SCRL_SA,SCRL_ON, XXXXXXX, XXXXXXX, XXXXXXX
   //                                                      |--------+--------+--------|
@@ -323,6 +324,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return PROCESS_OVERRIDE_BEHAVIOR;
         }
         break;
+        case LOWES: {
+            if (record->event.pressed) {
+                layer_on(_LOWER);
+            } else {
+                layer_off(_LOWER);
+                if (is_tapped) {
+                    tap_code(KC_ESC);
+                    tap_code(KC_MHEN);
+                    tap_code(KC_LANG2);
+                }
+            }
+            return PROCESS_OVERRIDE_BEHAVIOR;
+        }
+        break;
         case RAIKN: {
             if (record->event.pressed) {
                 layer_on(_RAISE);
@@ -352,6 +367,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return PROCESS_OVERRIDE_BEHAVIOR;
         }
         break;
+        case ADJKN: {
+            if (record->event.pressed) {
+                layer_on(_ADJUST);
+                // layer_on(_RAISE);
+                // layer_on(_LOWER);
+            } else {
+                layer_off(_ADJUST);
+                // layer_off(_RAISE);
+                // layer_off(_LOWER);
+                if (is_tapped) {
+                    tap_code(KC_HENK);
+                    tap_code(KC_LANG1);
+                }
+            }
+            return PROCESS_OVERRIDE_BEHAVIOR;
+        }
+        break;
         case CTLES: {
             if (record->event.pressed) {
                 register_code(KC_LCTRL);
@@ -359,6 +391,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_code(KC_LCTRL);
                 if (is_tapped) {
                     tap_code(KC_ESC);
+                    tap_code(KC_MHEN);
+                    tap_code(KC_LANG2);
+                }
+            }
+            return PROCESS_OVERRIDE_BEHAVIOR;
+        }
+        break;
+        case CTLEI: {
+            if (record->event.pressed) {
+                register_code(KC_LCTRL);
+            } else {
+                unregister_code(KC_LCTRL);
+                 if (is_tapped) {
                     tap_code(KC_MHEN);
                     tap_code(KC_LANG2);
                 }

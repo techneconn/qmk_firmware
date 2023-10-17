@@ -73,9 +73,12 @@ enum cocot_keycodes {
     // techneconn
     RGBRST, // Reset Lighting
     LOWEI, // Tap Eisu or Hold LOWER
+    LOWES, // Tap Space or Hold LOWER
     RAIKN, // Tap Kana or Hold RAISE
     ADJSP, // Tap Space or Hold ADJUST
+    ADJKN, // Tap Kana or Hold ADJUST
     CTLES, // Tap ESC+Eisu or Hold Ctrl
+    CTLEI, // Tap Eisu or Hold Ctrl
     HELLO, // Output Hello World
 };
 
